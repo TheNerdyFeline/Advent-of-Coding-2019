@@ -1,8 +1,10 @@
-import math
-wire_a = ['R75', 'D30', 'R83', 'U83', 'L12', 'D49' , 'R71', 'U7', 'L72']
-wire_b = ['U62', 'R66', 'U55', 'R34', 'D71', 'R55', 'D58', 'R83']
+import sys
+#wire_a = ['R75', 'D30', 'R83', 'U83', 'L12', 'D49' , 'R71', 'U7', 'L72']
+#wire_b = ['U62', 'R66', 'U55', 'R34', 'D71', 'R55', 'D58', 'R83']
 coords = {}
 md = []
+wire_a = sys.stdin.readline().split(',')
+wire_b = sys.stdin.readline().split(',')
 
 def grid_points(w, w_id):
 	x = 0
