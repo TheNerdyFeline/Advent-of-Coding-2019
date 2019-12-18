@@ -2,6 +2,7 @@ import sys
 import math
 
 grid = {}
+cps = {}
 best = math.inf
 moves = {'U': (+0, +1), 'D': (+0, -1), 'R': (+1, +0), 'L': (-1, +0)}
 
@@ -18,11 +19,15 @@ for wire, line in enumerate(sys.stdin):
 			cp = grid.get((x, y), ts)
 			cts = cp + ts
 			if grid.get((x, y)) and wire > 0:
-				best = cts
-				print(ts, grid.get(x, y), cp, best)
-			grid[(x, y)] = ts + wire
+				cps[(x, y)] = cts
+			if cts < best:
+					best = cts
+					#print('ts', ts, 'cp', cp, 'best', best)
+					print(cps)
+			grid[(x, y)] = ts
 
-print(best) 
+print(cps) 
+print(best)
 #293494 too high
 #7961 too low
 #6442 too low
