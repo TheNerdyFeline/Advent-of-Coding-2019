@@ -21,21 +21,14 @@ def pass_check(num_range):
 
 def pass_check2(a):
 	c = 0
-	#print(pp)
 	for j in a: 
 		runs = [len(list(g)) for _, g in groupby(j)]
 		for r in runs:
 			if r == 2:
 				rs = sum(u for u in runs if u > 1)
-				if rs % 2 == 0:
-					print(j)
-					print(runs)
-					print(rs)
-					c += 1
+				c += 1
+				break
 	print(c)
 
-#pass_check(list(range(244567, 244667)))
 pass_check(pws)
-# 1675
-# 1341 too high
-#1007 too low
+# 1675, 1142
