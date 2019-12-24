@@ -1,12 +1,12 @@
-from numpy import loadtxt
+import sys
 
-data = loadtxt('input.txt', comments='#', dtype='int', delimiter=',', unpack=False)
+data = sys.stdin.readline().split(',')
+diag_codes = [int(d) for d in data]
 sys_id = 1
-#print(data[0])
 
-def rep_in(loc, t):
+def rep_in(a, v):
 		try:
-			data[loc] = t
+			diag_codes[a] = v
 		except IndexError:
 			pass
 
@@ -25,39 +25,41 @@ def op4(pos):
 	return data[pos]
 	
 def intcode(diag):
-	for i in diag:
-		instruction = diag[i]
-		print('i', instruction)
-		if instruction <= 99:
-			opcode = instruction
-		else:
-			inst = [int(d) for d in str(instruction)]
-			opcode = inst[-1:]
-		m1 = inst[-3:-2] or 0
-		m2 = inst[-4: -3] or 0
-			# 0 = position, 1 = immediate
-		p1 = diag[i+1]
-		p2 = diag[i+2]
-		p3 = diag[i+3]
-		if m1 == 0: p1 = diag[p1]
-		if m2 == 0: p2 = diag[p2]
+	i = 0
+	while i < len(diag):
+		def get_par():
+			m1 = int(diag[i]/100 % 100)
+			m2 = int(diag[i]/100 % 1000)
+			par1 = diag[i+1]
+			par2 = diag[i+2]
+			p1 = diag[par1] if m1 == 0 else par1
+			p2 = diag[par2] if m2 == 0 else par2
+			return(p1, p2)
+		opcode = diag[i] % 100
 		if opcode == 99:
-			break
+			i += 1
+			print(i, diag[i])
 		elif opcode == 1:
+			p3 = diag[i+3]
+			p1, p2 = get_par()
+			print('op1', p1, p2, p3)
 			op1(p1, p2, p3)
 			i += 4
 		elif opcode == 2:
+			p3 = diag[i+3]
+			p1, p2 = get_par()
 			op2(p1, p2, p3)
 			i += 4
 		elif opcode == 3:
-			op3(p1, p2, sys_id)
+			p1 = diag[i+1]
+			op3(p1, sys_id)
 			i += 2
 		elif opcode == 4:
-			output = op4(p1, p2)
+			p1 = diag[i+1]
+			output = op4(p1)
 			print(output)
 			i +=2
 	print(diag[0])
 
-intcode(data)
-#find_vals()
-#grav_asst(4, 6)
+intcode(diag_codes)
+# 3 not right
