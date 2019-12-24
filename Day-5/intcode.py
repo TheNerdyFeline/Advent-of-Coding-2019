@@ -6,7 +6,7 @@ sys_id = 1
 
 def intcode(diag):
 	i = 0
-	while i < len(diag):
+	while True:
 		def get_par():
 			m1 = diag[i]//100 % 10
 			m2 = diag[i]//1000 % 10
