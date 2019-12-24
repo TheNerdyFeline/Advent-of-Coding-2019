@@ -12,6 +12,7 @@ def rep_in(a, v):
 
 def op1(x, y, p):
 	v = x + y
+	#print(v)
 	rep_in(p, v)
 
 def op2(x, y, p):
@@ -22,14 +23,14 @@ def op3(p, inp):
 	rep_in(p, inp)
 
 def op4(pos):
-	return data[pos]
+	return diag_codes[pos]
 	
 def intcode(diag):
 	i = 0
 	while i < len(diag):
 		def get_par():
-			m1 = int(diag[i]/100 % 100)
-			m2 = int(diag[i]/100 % 1000)
+			m1 = diag[i]//100 % 10
+			m2 = diag[i]//1000 % 10
 			par1 = diag[i+1]
 			par2 = diag[i+2]
 			p1 = diag[par1] if m1 == 0 else par1
@@ -37,12 +38,11 @@ def intcode(diag):
 			return(p1, p2)
 		opcode = diag[i] % 100
 		if opcode == 99:
-			i += 1
-			print(i, diag[i])
+			break
 		elif opcode == 1:
 			p3 = diag[i+3]
 			p1, p2 = get_par()
-			print('op1', p1, p2, p3)
+			#print('op1', p1, p2, p3)
 			op1(p1, p2, p3)
 			i += 4
 		elif opcode == 2:
@@ -57,9 +57,8 @@ def intcode(diag):
 		elif opcode == 4:
 			p1 = diag[i+1]
 			output = op4(p1)
-			print(output)
+			print('op4', output)
 			i +=2
-	print(diag[0])
 
 intcode(diag_codes)
 # 3 not right
