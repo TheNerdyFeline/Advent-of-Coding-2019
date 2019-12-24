@@ -4,27 +4,6 @@ data = sys.stdin.readline().split(',')
 diag_codes = [int(d) for d in data]
 sys_id = 1
 
-def rep_in(a, v):
-		try:
-			diag_codes[a] = v
-		except IndexError:
-			pass
-
-def op1(x, y, p):
-	v = x + y
-	#print(v)
-	rep_in(p, v)
-
-def op2(x, y, p):
-	v = (x * y)
-	rep_in(p, v)
-
-def op3(p, inp):
-	rep_in(p, inp)
-
-def op4(pos):
-	return diag_codes[pos]
-	
 def intcode(diag):
 	i = 0
 	while i < len(diag):
@@ -42,21 +21,22 @@ def intcode(diag):
 		elif opcode == 1:
 			p3 = diag[i+3]
 			p1, p2 = get_par()
-			#print('op1', p1, p2, p3)
-			op1(p1, p2, p3)
+			v = p1 + p2
+			diag[p3] = v
 			i += 4
 		elif opcode == 2:
 			p3 = diag[i+3]
 			p1, p2 = get_par()
-			op2(p1, p2, p3)
+			v = p1 * p2
+			diag[p3] = v
 			i += 4
 		elif opcode == 3:
 			p1 = diag[i+1]
-			op3(p1, sys_id)
+			diag[p1] = sys_id
 			i += 2
 		elif opcode == 4:
 			p1 = diag[i+1]
-			output = op4(p1)
+			output = diag[p1]
 			print('op4', output)
 			i +=2
 
