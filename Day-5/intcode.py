@@ -9,16 +9,21 @@ def intcode(diag):
 	while True:
 		def get_par(ps):
 			m1 = diag[i]//100 % 10
-			m2 = diag[i]//1000 % 10
 			par1 = diag[i+1]
-			par2 = diag[i+2]
-			par3 = diag[i+3]
 			p1 = diag[par1] if m1 == 0 else par1
-			p2 = diag[par2] if m2 == 0 else par2
 			if ps == 3:
+				m2 = diag[i]//1000 % 10
+				par2 = diag[i+2]
+				p2 = diag[par2] if m2 == 0 else par2
+				par3 = diag[i+3]
 				return(p1, p2, par3) 
-			else:
+			elif ps == 2:
+				m2 = diag[i]//1000 % 10
+				par2 = diag[i+2]
+				p2 = diag[par2] if m2 == 0 else par2
 				return(p1, p2)
+			else:
+				return(p1)
 		opcode = diag[i] % 100
 		if opcode == 99:
 			break
@@ -37,8 +42,9 @@ def intcode(diag):
 			diag[p1] = sys_id
 			i += 2
 		elif opcode == 4:
-			p1 = diag[i+1]
-			output = diag[p1]
+			output = get_par(1)
+			#p1 = diag[i+1]
+			#output = diag[p1]
 			print('op4', output)
 			i +=2
 		elif opcode == 5:
